@@ -16,12 +16,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const mapUserFromFirebaseAuthToUser = (user) => {
+    if (!user) return null;  // Return null if no user is logged in
+
     const {displayName, email, photoURL} = user;
     return {
         avatar: photoURL,
         username: displayName,
         email
-    }
+    };
 }
 
 export const LoginWithGitHub = () => {
