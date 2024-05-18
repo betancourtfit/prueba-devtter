@@ -3,7 +3,7 @@ import {initializeApp} from 'firebase/app';
 import { getAuth, GithubAuthProvider, signInWithPopup, onAuthStateChanged as firebaseOnAuthStateChanged } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA-NSIopjyWaWC7Uwww5Xu4P6xSNMPniJE",
+    apiKey: process.env.NEXT_PUBLIC_FIREBBASE_API_KEY,
     authDomain: "pruebanext-77b4d.firebaseapp.com",
     projectId: "pruebanext-77b4d",
     storageBucket: "pruebanext-77b4d.appspot.com",

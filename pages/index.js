@@ -13,8 +13,7 @@ import { useState, useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [user, setUser] = useState(null);
-  console.log(user);
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
     onAuthStateChanged(setUser)
@@ -25,8 +24,8 @@ export default function Home() {
       .then(user => {
         const { displayName, email, photoURL } = user.user;
         console.log(displayName, email, photoURL);
-        console.log(user)
         setUser({ displayName, email, photoURL });
+        console.log(user)
       })
       .catch(err => console.log(err));
   }
@@ -49,12 +48,13 @@ export default function Home() {
           <h1 className={styles.code}>Devter</h1>
           <h2 className={styles.description}>Talk abour developers</h2>
           <div> 
-            {user === null ?
+            {user === null &&
             <Button onClick={handleClick}>
               <Github fill='#fff' width={24} height={24} />
               Login with Github
             </Button>
-            : 
+            }
+            {user && user.username &&
             <div>
               <strong>{user.username}</strong>
               <img src={user.avatar} alt={user.username} />
