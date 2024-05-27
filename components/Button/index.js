@@ -1,8 +1,8 @@
 import {colors} from '../../styles/theme.js'
 
-export default function Button({ children, onClick }) {
+export default function Button({ children, disabled, onClick }) {
     return (
-        <button onClick={onClick}>
+        <button onClick={onClick} disabled={disabled}>
             {children}
             <style jsx>{`
                 button {
@@ -22,6 +22,11 @@ export default function Button({ children, onClick }) {
 
                 button:hover {
                     opacity: 0.7;
+                }
+
+                button[disabled] {
+                    pointer-events: none;
+                    opacity: 0.2;
                 }
             `}</style>
         </button>

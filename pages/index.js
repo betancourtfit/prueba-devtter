@@ -3,36 +3,35 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import AppLayout from "@/components/AppLayout";
 import { colors } from '../styles/theme'
 import Button from "@/components/Button";
 import Github from "@/components/Icons/Github"; 
 import { LoginWithGitHub, onAuthStateChanged } from "@/firebase/client";
 import { useState, useEffect } from "react";
+import Avatar from "@/components/Avatar";
+import Logo from "@/components/Icons/Logo";
+import { useRouter } from "next/router";
+import  userUser, { USER_STATES } from "@/hooks/useUser";
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [user, setUser] = useState(undefined);
+  const router = useRouter();
+  const user = userUser();
 
   useEffect(() => {
-    onAuthStateChanged(setUser)
-  }, [])
+    user && router.replace('/home')
+  }, [user])
 
   const handleClick = () => {
     LoginWithGitHub()
-      .then(user => {
-        const { displayName, email, photoURL } = user.user;
-        console.log(displayName, email, photoURL);
-        setUser({ displayName, email, photoURL });
-        console.log(user)
-      })
       .catch(err => console.log(err));
   }
-  useEffect(() => {
-    console.log(user); 
-  }
-  , [user]);
+
+
+
   return (
     <>
       <Head>
@@ -41,30 +40,27 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <main className={`${styles.main} ${inter.className}`}> */}
-      <AppLayout>
-        <section> 
-          <img src="/devter-logo.png" alt="logo" />
-          <h1 className={styles.code}>Devter</h1>
-          <h2 className={styles.description}>Talk abour developers</h2>
-          <div> 
-            {user === null &&
-            <Button onClick={handleClick}>
-              <Github fill='#fff' width={24} height={24} />
-              Login with Github
-            </Button>
-            }
-            {user && user.username &&
-            <div>
-              <strong>{user.username}</strong>
-              <img src={user.avatar} alt={user.username} />
-            </div>
-            }
+
+      <section> 
+        <Logo width="100" />
+        <h1 className={styles.code}>Devter</h1>
+        <h2 className={styles.description}>Talk abour developers</h2>
+        <div> 
+          {user === USER_STATES.NOT_LOGGED &&
+          <Button onClick={handleClick}>
+            <Github fill='#fff' width={24} height={24} />
+            Login with Github
+          </Button>
+          }
+          {user === USER_STATES.NOT_KNOWN && <img src="/spinner.gif" alt="spinner" />}
+          {user && user.username &&
+          <div>
+            <Avatar src={user.avatar} alt={user.username} text={user.username} withText={true} />
           </div>
-        </section>
-        <Link href="/timeline">timeline</Link>
-      </AppLayout>
-      {/* </main> */}
+          }
+        </div>
+      </section>
+      <Link href="/timeline">timeline</Link>
 
       <style jsx>{`
         img {
