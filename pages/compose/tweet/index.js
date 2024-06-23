@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import {getDownloadURL} from "firebase/storage";
 import Avatar from "@/components/Avatar";
+import Navbar from "@/components/Navbar";
+import { breakpoints } from "@/styles/theme";
 
 const COMPOSE_STATES = {
     USER_NOT_KNOWN: 0,
@@ -114,9 +116,21 @@ export default function ComposeTweet() {
                         </div>
                     </form>
                 </section>
+
+                {/* Including the navbar component at the bottom of the page */}
+                <div className="navbar-container">
+                    <Navbar />
+                </div>
+
             <style jsx>{`
-                div {
-                    padding: 15px;
+                .navbar-container {
+                    width: 100%;
+                    max-width: ${breakpoints.mobile}; // Adjust according to your app's layout constraints
+                    margin: 0 auto;
+                    position: fixed;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
                 }
                 form {
                     padding: 10px;

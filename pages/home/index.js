@@ -7,6 +7,8 @@ import Create from "@/components/Icons/Create"
 import Home from "@/components/Icons/Home"
 import Search from "@/components/Icons/Search"
 import Head from "next/head"
+import Navbar from "@/components/Navbar"
+import { breakpoints } from "@/styles/theme"
 
 
 export default function HomePage() {
@@ -31,27 +33,22 @@ export default function HomePage() {
                 ))
             }
             </section>
+            {/* importing Navbar component */}
+            <div className="navbar-container">
+                < Navbar />
+            </div>
 
-            <nav>
-                <span>
-                    <Link href="/home">
-                        <Home width={24} height={24} stroke="#09f" />
-                    </Link>
-                </span>
-                <span>
-                    <Link href="/search">
-                        <Search width={24} height={24} stroke="#09f" />
-                    </Link>
-                </span>
-                <span>
-                    <Link href="/compose/tweet">
-                        <Create width={24} height={24} stroke="#09f" />
-                    </Link>
-                </span>
-
-            </nav>
 
             <style jsx>{`
+                .navbar-container {
+                    width: 100%;
+                    max-width: ${breakpoints.mobile}; // Adjust according to your app's layout constraints
+                    margin: 0 auto;
+                    position: fixed;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
                 header {
                     align-items: center;
                     border-bottom: 1px solid #ccc;
@@ -69,7 +66,7 @@ export default function HomePage() {
                     font-weight: 800;
                     padding-left: 15px;
                 }
-                nav {
+                {/* nav {
                     background: #fff;
                     bottom: 0;
                     border-top: 1px solid #eee;
@@ -91,7 +88,7 @@ export default function HomePage() {
                     background: radial-gradient(#0099ff22 15%, transparent 16%);
                     background-size: 180px 180px;
                     background-position: center;
-                }
+                } */}
             `}</style>
         </>
     )

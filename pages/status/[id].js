@@ -4,7 +4,7 @@ import Devit from "@/components/Devit";
 export default function DevitPage(props) {
     return (
         <>
-            <Devit {...props}  />
+            <Devit {...props} />
             <style jsx>{``}</style>
         </>
     );
@@ -15,7 +15,9 @@ export async function getServerSideProps(context) {
     const { id } = params;
 
     try {
-        const apiResponse = await fetch(`http://localhost:3000/api/devits/${id}`);
+        const apiResponse = await fetch(
+            `http://localhost:3000/api/devits/${id}`
+        );
         if (apiResponse.ok) {
             const props = await apiResponse.json();
             return { props };
